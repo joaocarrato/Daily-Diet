@@ -1,5 +1,7 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import { StackTypes } from '../../@types/navigation';
 import Icon from '../../assets/images/Icon.svg';
 import Logo from '../../assets/images/logo.svg';
 import AddMealButton from '../../components/addMealButton';
@@ -8,6 +10,8 @@ import MealContainer from '../../components/mealContainer';
 import { BodyM, TitleS } from '../../themes/styles';
 
 const Home = () => {
+  const navigation = useNavigation<StackTypes>();
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -19,7 +23,7 @@ const Home = () => {
 
       <BodyM>Refeições</BodyM>
 
-      <AddMealButton />
+      <AddMealButton onPress={() => navigation.navigate('RegisterMeal')} />
 
       <TitleS>12.08.22</TitleS>
 

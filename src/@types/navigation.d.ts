@@ -5,6 +5,7 @@ type StackParams = {
   MealStats: {
     percentage: string;
   };
+  RegisterMeal: undefined;
 };
 
 export type StackTypes = NativeStackNavigationProp<StackParams>;

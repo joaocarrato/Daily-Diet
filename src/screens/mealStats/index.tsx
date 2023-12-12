@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.product.greenLight,
     paddingTop: 56,
   },
-
   headerContainer: {
     alignSelf: 'center',
     justifyContent: 'center',

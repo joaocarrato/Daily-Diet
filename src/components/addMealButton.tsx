@@ -3,9 +3,13 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { colors, fonts } from '../themes/themes';
 
-const AddMealButton = () => {
+type MealButtonProps = {
+  onPress: () => void;
+};
+
+const AddMealButton = ({ onPress }: MealButtonProps) => {
   return (
-    <TouchableOpacity style={styles.button}>
+    <TouchableOpacity style={styles.button} onPress={onPress}>
       <Plus size={18} color={colors.base.white} weight={'bold'} />
       <Text style={styles.buttonText}>Nova refeição</Text>
     </TouchableOpacity>
