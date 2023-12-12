@@ -27,6 +27,7 @@ end
 
 target 'DailyDiet' do
   config = use_native_modules!
+  #use_frameworks!
 
   use_react_native!(
     :path => config[:reactNativePath],
