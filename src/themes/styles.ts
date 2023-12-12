@@ -4,53 +4,62 @@ import { colors, fonts } from './themes';
 
 interface CustomTextProps extends TextProps {
   color?: string; // Adicione a propriedade color ao tipo
+  size?: string;
+  textAlign?: string;
 }
 
-export const TitleG = styled.Text`
+export const TitleG = styled.Text<CustomTextProps>`
   font-size: 32px;
   color: ${colors.base.gray100};
   font-weight: bold;
   font-family: ${fonts.bold};
+  text-align: ${props => props.textAlign || 'auto'};
 `;
 
-export const TitleM = styled.Text`
+export const TitleM = styled.Text<CustomTextProps>`
   font-size: 24px;
   color: ${colors.base.gray100};
   font-weight: bold;
   font-family: ${fonts.bold};
+  text-align: ${props => props.textAlign || 'auto'};
 `;
 
-export const TitleS = styled.Text`
+export const TitleS = styled.Text<CustomTextProps>`
   font-size: 18px;
   color: ${colors.base.gray100};
   font-weight: bold;
   font-family: ${fonts.bold};
+  text-align: ${props => props.textAlign || 'auto'};
 `;
 
-export const TitleXS = styled.Text`
-  font-size: 14px;
+export const TitleXS = styled.Text<CustomTextProps>`
+  font-size: ${props => props.size || '14px'};
   color: ${colors.base.gray100};
   font-weight: bold;
   font-family: ${fonts.bold};
+  text-align: ${props => props.textAlign || 'auto'};
 `;
 
 export const BodyM = styled.Text<CustomTextProps>`
-  font-size: 16px;
+  font-size: ${props => props.size || '16px'};
   color: ${props => props.color || colors.base.gray100};
   font-family: ${fonts.regular};
+  text-align: ${props => props.textAlign || 'auto'};
 `;
 
 export const BodyS = styled.Text<CustomTextProps>`
-  font-size: 14px;
+  font-size: ${props => props.size || '14px'};
   color: ${props => props.color || colors.base.gray100};
   font-family: ${fonts.regular};
+  text-align: ${props => props.textAlign || 'auto'};
 `;
 
 export const BodyXS = styled.Text<CustomTextProps>`
-  font-size: 12px;
+  font-size: ${props => props.size || '12px'};
   font-weight: bold;
   color: ${props => props.color || colors.base.gray100};
   font-family: ${fonts.bold};
+  text-align: ${props => props.textAlign || 'auto'};
 `;
 
 export const VerticalDivider = styled.View`

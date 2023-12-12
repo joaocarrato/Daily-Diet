@@ -1,22 +1,29 @@
+import { useNavigation } from '@react-navigation/native';
 import { ArrowUpRight } from 'phosphor-react-native';
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StackTypes } from '../@types/navigation';
 import { BodyS, TitleG } from '../themes/styles';
 import { colors } from '../themes/themes';
 
 const Box = () => {
+  const [percentage, setPercentage] = useState<string>('90,86%');
+  const navigation = useNavigation<StackTypes>();
+
   return (
-    <View style={styles.box}>
+    <TouchableOpacity
+      style={styles.box}
+      onPress={() => navigation.navigate('MealStats', { percentage })}>
       <ArrowUpRight
         color={colors.product.greenDark}
         size={30}
         style={styles.arrowIcon}
       />
       <View style={styles.textContainer}>
-        <TitleG>90,86%</TitleG>
+        <TitleG>{percentage}</TitleG>
         <BodyS color={colors.base.gray200}>das refeições dentro da dieta</BodyS>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
