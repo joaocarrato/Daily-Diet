@@ -20,9 +20,16 @@ const RegisterMeal = () => {
   const [date, setDate] = useState('');
   const [hour, setHour] = useState('');
   const [selected, setSelected] = useState('');
-  console.log(date);
 
   const navigation = useNavigation<StackTypes>();
+
+  const handleNavigation = () => {
+    if (selected === 'yes') {
+      return navigation.navigate('YesDiet');
+    } else {
+      return navigation.navigate('NoDiet');
+    }
+  };
 
   return (
     <View style={styles.header}>
@@ -88,7 +95,7 @@ const RegisterMeal = () => {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleNavigation}>
           <Text style={styles.buttonText}>Cadastrar refeição</Text>
         </TouchableOpacity>
       </View>

@@ -14,8 +14,16 @@ const Router = () => {
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="MealStats" component={MealStats} />
       <Stack.Screen name="RegisterMeal" component={RegisterMeal} />
-      <Stack.Screen name="NoDiet" component={NoDiet} />
-      <Stack.Screen name="YesDiet" component={YesDiet} />
+      <Stack.Screen
+        name="NoDiet"
+        component={NoDiet}
+        options={{ gestureEnabled: false }}
+      />
+      <Stack.Screen
+        name="YesDiet"
+        component={YesDiet}
+        options={{ gestureEnabled: false }}
+      />
     </Stack.Navigator>
   );
 };
