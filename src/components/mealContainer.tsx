@@ -1,18 +1,30 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { BodyM, BodyXS, RedCircular, VerticalDivider } from '../themes/styles';
+import {
+  BodyM,
+  BodyXS,
+  GreenCircular,
+  RedCircular,
+  VerticalDivider,
+} from '../themes/styles';
 import { colors } from '../themes/themes';
 
-const MealContainer = () => {
+type MealContainerProps = {
+  hour: string;
+  name: string;
+  isDiet: string;
+};
+
+const MealContainer = ({ hour, name, isDiet }: MealContainerProps) => {
   return (
     <View style={styles.mealContainer}>
       <View style={styles.hourInfo}>
-        <BodyXS>20:00</BodyXS>
+        <BodyXS>{hour}</BodyXS>
         <VerticalDivider />
-        <BodyM color={colors.base.gray200}>X-Tudo</BodyM>
+        <BodyM color={colors.base.gray200}>{name}</BodyM>
       </View>
 
-      <RedCircular />
+      {isDiet === 'yes' ? <GreenCircular /> : <RedCircular />}
     </View>
   );
 };

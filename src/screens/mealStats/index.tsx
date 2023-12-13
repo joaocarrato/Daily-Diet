@@ -10,6 +10,7 @@ import { StackTypes } from '../../@types/navigation';
 import BigBox from '../../components/bigBox';
 import CustomButtonBack from '../../components/customButtonBack';
 import SmallBox from '../../components/smallBox';
+import { useDietStore } from '../../store/useDietStore';
 import { BodyS, TitleG, TitleXS } from '../../themes/styles';
 import { colors } from '../../themes/themes';
 
@@ -22,6 +23,7 @@ interface TypeParams extends RouteProp<ParamListBase> {
 const MealStats = () => {
   const { params } = useRoute<TypeParams>();
   const navigation = useNavigation<StackTypes>();
+  const { mealsRegister } = useDietStore();
 
   return (
     <View style={styles.header}>
@@ -47,7 +49,7 @@ const MealStats = () => {
         <View style={styles.rowContainer}>
           <SmallBox
             color={colors.product.greenLight}
-            title="99"
+            title={String(mealsRegister)}
             subTitle="Refeições dentro da dieta"
           />
           <SmallBox
