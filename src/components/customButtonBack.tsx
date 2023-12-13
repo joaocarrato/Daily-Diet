@@ -5,12 +5,16 @@ import { colors } from '../themes/themes';
 
 type HeaderProps = {
   navigation: () => void;
+  color?: string;
 };
 
-const CustomButtonBack = ({ navigation }: HeaderProps) => {
+const CustomButtonBack = ({
+  navigation,
+  color = colors.product.greenDark,
+}: HeaderProps) => {
   return (
     <TouchableOpacity onPress={navigation} style={styles.arrowButton}>
-      <ArrowLeft size={26} color={colors.product.greenDark} />
+      <ArrowLeft size={26} color={color} />
     </TouchableOpacity>
   );
 };

@@ -18,7 +18,7 @@ export const TitleG = styled.Text<CustomTextProps>`
 
 export const TitleM = styled.Text<CustomTextProps>`
   font-size: 24px;
-  color: ${colors.base.gray100};
+  color: ${props => props.color || colors.base.gray100};
   font-weight: bold;
   font-family: ${fonts.bold};
   text-align: ${props => props.textAlign || 'auto'};
