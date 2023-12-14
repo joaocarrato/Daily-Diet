@@ -4,7 +4,7 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import { PencilSimpleLine, Trash } from 'phosphor-react-native';
+import { Trash } from 'phosphor-react-native';
 import React from 'react';
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { StackTypes } from '../../@types/navigation';
@@ -82,10 +82,10 @@ const MealDetails = () => {
           )}
         </View>
 
-        <TouchableOpacity style={styles.button}>
+        {/* <TouchableOpacity style={styles.button}>
           <PencilSimpleLine color="white" />
           <Text style={styles.buttonText}>Editar refeição</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <TouchableOpacity
           style={styles.buttonOutline}
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 10000,
-    marginBottom: '90%',
+    marginBottom: '95%',
   },
 });
 

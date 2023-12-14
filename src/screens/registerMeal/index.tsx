@@ -1,5 +1,7 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import {
   StyleSheet,
   Text,
@@ -8,20 +10,42 @@ import {
   View,
 } from 'react-native';
 import { uid } from 'uid';
+import { z } from 'zod';
 import { StackTypes } from '../../@types/navigation';
 import CustomButtonBack from '../../components/customButtonBack';
 import Input from '../../components/input';
 import { useDietStore } from '../../store/useDietStore';
-import { TitleS, TitleXS } from '../../themes/styles';
+import { BodyS, TitleS, TitleXS } from '../../themes/styles';
 import { colors, fonts } from '../../themes/themes';
 import { globalStyle } from './global';
 
+const schema = z
+  .object({
+    name: z
+      .string()
+      .trim()
+      .refine(value => value.length > 1, 'Campo obrigatório'),
+    description: z
+      .string()
+      .trim()
+      .refine(value => value.length > 4, 'Campo obrigatório'),
+    date: z.string().trim().min(10, 'Formato de data inválido'),
+    hour: z.string().trim().min(5, 'Formato de hora inválido'),
+  })
+  .required();
+
+type RegisterMealProps = z.infer<typeof schema>;
+
 const RegisterMeal = () => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [date, setDate] = useState('');
-  const [hour, setHour] = useState('');
   const [selected, setSelected] = useState('');
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterMealProps>({
+    resolver: zodResolver(schema),
+  });
 
   const navigation = useNavigation<StackTypes>();
 
@@ -29,19 +53,13 @@ const RegisterMeal = () => {
 
   const id = uid(10);
 
-  const handleNavigation = (
-    name: string,
-    description: string,
-    date: string,
-    hour: string,
-    selected: string,
-  ) => {
+  const onSubmit = (data: RegisterMealProps) => {
     addMeal({
       id: id,
-      name: name,
-      description: description,
-      date: date,
-      hour: hour,
+      name: data.name,
+      description: data.description,
+      date: data.date,
+      hour: data.hour,
       isDiet: selected,
     });
     addMealsRegister();
@@ -64,37 +82,72 @@ const RegisterMeal = () => {
 
       <View style={styles.container}>
         <TitleXS>Nome</TitleXS>
-        <TextInput
-          style={styles.input}
-          value={name}
-          onChangeText={text => setName(text)}
+        {errors.name && (
+          <BodyS color={colors.product.redDark}>Campo requerido</BodyS>
+        )}
+        <Controller
+          control={control}
+          name="name"
+          render={({ field: { value, onChange } }) => (
+            <TextInput
+              style={styles.input}
+              value={value}
+              onChangeText={onChange}
+            />
+          )}
         />
-
         <TitleXS>Descrição</TitleXS>
-        <TextInput
-          style={styles.boxInput}
-          multiline
-          value={description}
-          onChangeText={text => setDescription(text)}
+        {errors.description && (
+          <BodyS color={colors.product.redDark}>Campo requerido</BodyS>
+        )}
+        <Controller
+          control={control}
+          name="description"
+          render={({ field: { value, onChange } }) => (
+            <TextInput
+              style={styles.boxInput}
+              multiline
+              value={value}
+              onChangeText={onChange}
+            />
+          )}
         />
 
         <View style={styles.containerRow}>
           <View>
             <TitleXS>Data</TitleXS>
-            <Input
-              type="datetime"
-              options={{ format: 'DD/MM/YYYY' }}
-              value={date}
-              onChangeText={item => setDate(item)}
+            {errors.date && (
+              <BodyS color={colors.product.redDark}>Campo requerido</BodyS>
+            )}
+            <Controller
+              control={control}
+              name="date"
+              render={({ field: { value, onChange } }) => (
+                <Input
+                  type="datetime"
+                  options={{ format: 'DD/MM/YYYY' }}
+                  value={value}
+                  onChangeText={onChange}
+                />
+              )}
             />
           </View>
           <View>
             <TitleXS>Hora</TitleXS>
-            <Input
-              type="datetime"
-              options={{ format: 'HH:mm' }}
-              value={hour}
-              onChangeText={item => setHour(item)}
+            {errors.hour && (
+              <BodyS color={colors.product.redDark}>Campo requerido</BodyS>
+            )}
+            <Controller
+              control={control}
+              name="hour"
+              render={({ field: { value, onChange } }) => (
+                <Input
+                  type="datetime"
+                  options={{ format: 'HH:mm' }}
+                  value={value}
+                  onChangeText={onChange}
+                />
+              )}
             />
           </View>
         </View>
@@ -117,10 +170,15 @@ const RegisterMeal = () => {
         </View>
 
         <TouchableOpacity
-          style={styles.button}
-          onPress={() =>
-            handleNavigation(name, description, date, hour, selected)
-          }>
+          disabled={selected === '' ? true : false}
+          style={[
+            styles.button,
+            {
+              backgroundColor:
+                selected === '' ? colors.base.gray400 : colors.base.gray200,
+            },
+          ]}
+          onPress={handleSubmit(onSubmit)}>
           <Text style={styles.buttonText}>Cadastrar refeição</Text>
         </TouchableOpacity>
       </View>
@@ -167,8 +225,8 @@ const styles = StyleSheet.create({
     borderColor: colors.base.gray500,
     marginTop: 4,
     borderRadius: 8,
-    padding: 14,
-    paddingTop: 18,
+    padding: 12,
+    paddingTop: 14,
   },
   containerRow: {
     flexDirection: 'row',
