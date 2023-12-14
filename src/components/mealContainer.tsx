@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import {
   BodyM,
   BodyXS,
@@ -13,11 +13,12 @@ type MealContainerProps = {
   hour: string;
   name: string;
   isDiet: string;
+  onPress?: () => void;
 };
 
-const MealContainer = ({ hour, name, isDiet }: MealContainerProps) => {
+const MealContainer = ({ hour, name, isDiet, onPress }: MealContainerProps) => {
   return (
-    <View style={styles.mealContainer}>
+    <TouchableOpacity style={styles.mealContainer} onPress={onPress}>
       <View style={styles.hourInfo}>
         <BodyXS>{hour}</BodyXS>
         <VerticalDivider />
@@ -25,7 +26,7 @@ const MealContainer = ({ hour, name, isDiet }: MealContainerProps) => {
       </View>
 
       {isDiet === 'yes' ? <GreenCircular /> : <RedCircular />}
-    </View>
+    </TouchableOpacity>
   );
 };
 

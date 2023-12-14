@@ -5,10 +5,11 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 interface IDietStore {
   meals: IDiet[];
   addMeal: (meal: IDiet) => void;
-  removeMeal: (name: string) => void;
+  removeMeal: (id: string) => void;
   mealsRegister: number;
   addMealsRegister: () => void;
-  removeMealsRegister: () => void;
+  removeOneMeal: () => void;
+  removeAllMeals: () => void;
 }
 
 export const useDietStore = create(
@@ -19,18 +20,23 @@ export const useDietStore = create(
         set(state => ({
           meals: [...state.meals, meal],
         })),
-      removeMeal: (name: string) =>
+      removeMeal: (id: string) =>
         set(state => ({
-          meals: state.meals.filter(value => value.name !== name),
+          meals: state.meals.filter(value => value.id !== id),
         })),
+
       mealsRegister: 0,
       addMealsRegister: () =>
         set(state => ({
           mealsRegister: state.mealsRegister + 1,
         })),
-      removeMealsRegister: () =>
+      removeOneMeal: () =>
         set(state => ({
-          mealsRegister: (state.mealsRegister = 0),
+          mealsRegister: state.mealsRegister - 1,
+        })),
+      removeAllMeals: () =>
+        set(state => ({
+          meals: [],
         })),
     }),
     {

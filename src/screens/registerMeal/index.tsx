@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { uid } from 'uid';
 import { StackTypes } from '../../@types/navigation';
 import CustomButtonBack from '../../components/customButtonBack';
 import Input from '../../components/input';
@@ -26,6 +27,8 @@ const RegisterMeal = () => {
 
   const { addMeal, addMealsRegister } = useDietStore();
 
+  const id = uid(10);
+
   const handleNavigation = (
     name: string,
     description: string,
@@ -34,6 +37,7 @@ const RegisterMeal = () => {
     selected: string,
   ) => {
     addMeal({
+      id: id,
       name: name,
       description: description,
       date: date,

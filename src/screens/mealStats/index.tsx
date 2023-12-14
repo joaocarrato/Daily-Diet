@@ -32,7 +32,6 @@ const MealStats = () => {
     let newDiet = 0;
 
     meals.filter(value => (value.isDiet === 'no' ? newDiet++ : null));
-    console.log(newDiet);
     return setNoDiet(newDiet!);
   }, []);
 
@@ -40,7 +39,6 @@ const MealStats = () => {
     let newDiet = 0;
 
     meals.filter(value => (value.isDiet === 'yes' ? newDiet++ : null));
-    console.log(newDiet);
     return setYesDiet(newDiet!);
   }, []);
 

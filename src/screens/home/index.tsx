@@ -33,6 +33,16 @@ const Home = () => {
         data={meals}
         renderItem={({ item }) => (
           <MealContainer
+            onPress={() =>
+              navigation.navigate('MealDetails', {
+                id: item.id,
+                date: item.date,
+                description: item.description,
+                hour: item.hour,
+                isDiet: item.isDiet,
+                name: item.name,
+              })
+            }
             hour={item.hour}
             name={item.name}
             isDiet={item.isDiet}
