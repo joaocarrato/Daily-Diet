@@ -81,3 +81,7 @@ export const GreenCircular = styled.View`
   border-radius: 99px;
   background-color: ${colors.product.greenMid};
 `;
+
+export const Gap = styled.View`
+  height: 400px;
+`;

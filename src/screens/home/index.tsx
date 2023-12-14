@@ -1,6 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import {
+  Alert,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { StackTypes } from '../../@types/navigation';
 import Icon from '../../assets/images/Icon.svg';
 import Logo from '../../assets/images/logo.svg';
@@ -8,11 +14,25 @@ import AddMealButton from '../../components/addMealButton';
 import Box from '../../components/box';
 import MealContainer from '../../components/mealContainer';
 import { useDietStore } from '../../store/useDietStore';
-import { BodyM, TitleS } from '../../themes/styles';
+import { BodyM, Gap, TitleS, TitleXS } from '../../themes/styles';
 
 const Home = () => {
   const navigation = useNavigation<StackTypes>();
-  const { meals } = useDietStore();
+  const { meals, removeAllMeals } = useDietStore();
+
+  const handleRemove = () => {
+    Alert.alert('Confirmar ação', 'Deseja excluir todas as dietas?', [
+      {
+        text: 'Sim',
+        onPress: removeAllMeals,
+        style: 'cancel',
+      },
+      {
+        text: 'Não',
+        style: 'cancel',
+      },
+    ]);
+  };
 
   return (
     <View style={styles.container}>
@@ -27,9 +47,15 @@ const Home = () => {
 
       <AddMealButton onPress={() => navigation.navigate('RegisterMeal')} />
 
-      <TitleS>12.08.22</TitleS>
+      <View style={styles.rowContainer}>
+        <TitleS>Dietas</TitleS>
+        <TouchableOpacity onPress={handleRemove}>
+          <TitleXS>Limpar todos</TitleXS>
+        </TouchableOpacity>
+      </View>
 
       <FlatList
+        ListFooterComponent={<Gap />}
         data={meals}
         renderItem={({ item }) => (
           <MealContainer
@@ -62,6 +88,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 33,
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });
 
