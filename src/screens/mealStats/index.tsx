@@ -4,12 +4,13 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { StackTypes } from '../../@types/navigation';
 import BigBox from '../../components/bigBox';
 import CustomButtonBack from '../../components/customButtonBack';
 import SmallBox from '../../components/smallBox';
+import { useDietStore } from '../../store/useDietStore';
 import { BodyS, TitleG, TitleXS } from '../../themes/styles';
 import { colors } from '../../themes/themes';
 
@@ -20,8 +21,26 @@ interface TypeParams extends RouteProp<ParamListBase> {
 }
 
 const MealStats = () => {
+  const [noDiet, setNoDiet] = useState(0);
+  const [yesDiet, setYesDiet] = useState(0);
+
   const { params } = useRoute<TypeParams>();
   const navigation = useNavigation<StackTypes>();
+  const { mealsRegister, meals } = useDietStore();
+
+  useEffect(() => {
+    let newDiet = 0;
+
+    meals.filter(value => (value.isDiet === 'no' ? newDiet++ : null));
+    return setNoDiet(newDiet!);
+  }, []);
+
+  useEffect(() => {
+    let newDiet = 0;
+
+    meals.filter(value => (value.isDiet === 'yes' ? newDiet++ : null));
+    return setYesDiet(newDiet!);
+  }, []);
 
   return (
     <View style={styles.header}>
@@ -42,17 +61,20 @@ const MealStats = () => {
           subTitle="Melhor sequência dentro de pratos da dieta"
         />
 
-        <BigBox title="109" subTitle="Refeições registradas" />
+        <BigBox
+          title={String(mealsRegister)}
+          subTitle="Refeições registradas"
+        />
 
         <View style={styles.rowContainer}>
           <SmallBox
             color={colors.product.greenLight}
-            title="99"
+            title={String(yesDiet)}
             subTitle="Refeições dentro da dieta"
           />
           <SmallBox
             color={colors.product.redLight}
-            title="10"
+            title={String(noDiet)}
             subTitle="Refeições fora da dieta"
           />
         </View>

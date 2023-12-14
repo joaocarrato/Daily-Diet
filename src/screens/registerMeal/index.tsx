@@ -7,9 +7,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { uid } from 'uid';
 import { StackTypes } from '../../@types/navigation';
 import CustomButtonBack from '../../components/customButtonBack';
 import Input from '../../components/input';
+import { useDietStore } from '../../store/useDietStore';
 import { TitleS, TitleXS } from '../../themes/styles';
 import { colors, fonts } from '../../themes/themes';
 import { globalStyle } from './global';
@@ -23,7 +25,26 @@ const RegisterMeal = () => {
 
   const navigation = useNavigation<StackTypes>();
 
-  const handleNavigation = () => {
+  const { addMeal, addMealsRegister } = useDietStore();
+
+  const id = uid(10);
+
+  const handleNavigation = (
+    name: string,
+    description: string,
+    date: string,
+    hour: string,
+    selected: string,
+  ) => {
+    addMeal({
+      id: id,
+      name: name,
+      description: description,
+      date: date,
+      hour: hour,
+      isDiet: selected,
+    });
+    addMealsRegister();
     if (selected === 'yes') {
       return navigation.navigate('YesDiet');
     } else {
@@ -54,7 +75,7 @@ const RegisterMeal = () => {
           style={styles.boxInput}
           multiline
           value={description}
-          onChangeText={text => setName(text)}
+          onChangeText={text => setDescription(text)}
         />
 
         <View style={styles.containerRow}>
@@ -95,7 +116,11 @@ const RegisterMeal = () => {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={handleNavigation}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() =>
+            handleNavigation(name, description, date, hour, selected)
+          }>
           <Text style={styles.buttonText}>Cadastrar refeição</Text>
         </TouchableOpacity>
       </View>

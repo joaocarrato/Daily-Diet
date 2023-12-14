@@ -1,19 +1,32 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { BodyM, BodyXS, RedCircular, VerticalDivider } from '../themes/styles';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  BodyM,
+  BodyXS,
+  GreenCircular,
+  RedCircular,
+  VerticalDivider,
+} from '../themes/styles';
 import { colors } from '../themes/themes';
 
-const MealContainer = () => {
+type MealContainerProps = {
+  hour: string;
+  name: string;
+  isDiet: string;
+  onPress?: () => void;
+};
+
+const MealContainer = ({ hour, name, isDiet, onPress }: MealContainerProps) => {
   return (
-    <View style={styles.mealContainer}>
+    <TouchableOpacity style={styles.mealContainer} onPress={onPress}>
       <View style={styles.hourInfo}>
-        <BodyXS>20:00</BodyXS>
+        <BodyXS>{hour}</BodyXS>
         <VerticalDivider />
-        <BodyM color={colors.base.gray200}>X-Tudo</BodyM>
+        <BodyM color={colors.base.gray200}>{name}</BodyM>
       </View>
 
-      <RedCircular />
-    </View>
+      {isDiet === 'yes' ? <GreenCircular /> : <RedCircular />}
+    </TouchableOpacity>
   );
 };
 
